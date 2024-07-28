@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import authRoutes from './auth.rotue';
+import authRoutes from './auth.rotue.js';
 
 const router = Router();
 
