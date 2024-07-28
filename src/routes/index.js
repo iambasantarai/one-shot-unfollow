@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import authRoutes from './auth.rotue';
 
 const router = Router();
 
@@ -11,5 +12,7 @@ router.get('/heartbeat', (req, res) => {
 
   res.status(200).json({ heartbeat: hrtime.toString() });
 });
+
+router.use('/auth', authRoutes);
 
 export default router;
