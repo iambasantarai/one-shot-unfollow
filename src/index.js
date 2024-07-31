@@ -1,6 +1,6 @@
 import url from 'node:url';
 import path from 'node:path';
-import express from 'express';
+import express, { json } from 'express';
 
 import routes from './routes/index.js';
 
@@ -9,6 +9,8 @@ const app = express();
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.set('views', [path.join(__dirname, 'views')]);
