@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import authRoutes from './auth.rotue.js';
+import igRoutes from './ig.rotue.js';
 
 const router = Router();
 
@@ -13,6 +13,6 @@ router.get('/heartbeat', (req, res) => {
   res.status(200).json({ heartbeat: hrtime.toString() });
 });
 
-router.use('/auth', authRoutes);
+router.use('/ig', igRoutes);
 
 export default router;

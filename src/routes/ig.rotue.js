@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { loginHandler, logoutHandler } from '../controllers/auth.controller.js';
+import { loginHandler, logoutHandler } from '../controllers/ig.controller.js';
 
 const router = Router();
 
