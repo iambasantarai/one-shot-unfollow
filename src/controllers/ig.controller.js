@@ -1,4 +1,4 @@
-import { IgApiClient } from 'instagram-private-api';
+import { IgApiClient, IgLoginBadPasswordError } from 'instagram-private-api';
 
 const ig = new IgApiClient();
 
@@ -28,20 +28,15 @@ export async function loginHandler(req, res) {
 
 export async function unfollowHandler(_req, res) {
   try {
-    const followingList = await ig.feed
+    const following = await ig.feed
       .accountFollowing(ig.state.cookieUserId)
       .items();
-    const following = Object.entries(followingList);
 
-    following.map((followee) => {
-      ig.friendship.destroy(followee[1].pk);
-    });
-
-    if (following.length <= 0) {
-      return res.redirect('/unfollow', {
-        message: 'Unfollowed all.',
-      });
+    for (const followee of following) {
+      await ig.friendship.destroy(followee.pk);
     }
+
+    return res.redirect('/unfollow');
   } catch (error) {
     console.log('ERROR: ', error);
   }
