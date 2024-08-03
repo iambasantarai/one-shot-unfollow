@@ -8,15 +8,10 @@
             <p class="mt-2 text-center text-sm text-slate-600">Clear your instagram following in one shot</p>
 
             <% if (info.length > 0) {%>
-            <div class="fixed bottom-0 inset-x-0 z-20 flex items-center justify-center px-2 py-4 mx-2 my-4">
+            <div id="info" class="fixed bottom-0 inset-x-0 z-20 flex items-center justify-center px-2 py-4 mx-2 my-4">
                 <div class="w-full max-w-sm bg-white border shadow-lg rounded-lg">
-                    <div class="flex justify-between items-center p-4">
-                        <span class="ml-2 font-semibold text-slate-500 text-md"><%= info %></span>
-                        <button class="text-slate-400 hover:text-slate-500">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                    <div class="flex items-center p-4">
+                        <span class="font-semibold text-slate-500 text-md"><%= info %></span>
                     </div>
                 </div>
             </div>
