@@ -2,10 +2,13 @@
 
 <div class="relative bg-white px-6 pt-10 pb-8 shadow ring-1 ring-slate-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
     <div class="mx-auto max-w-md">
-        <form class="space-y-4" method="POST" action="/ig/login" >
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">One Shot Unfollow</h2>
-
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-10 w-auto" src="../assets/one-shot-unfollow.svg" alt="one-shot-unfollow">
+            <h2 class="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-slate-900">One Shot Unfollow</h2>
             <p class="mt-2 text-center text-sm text-slate-600">Clear your instagram following in one shot</p>
+        </div>
+
+        <form class="space-y-4 mt-4" method="POST" action="/ig/login" >
 
             <% if (info.length > 0) {%>
             <div id="info" class="fixed bottom-0 inset-x-0 z-20 flex items-center justify-center px-2 py-4 mx-2 my-4">
