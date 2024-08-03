@@ -1,4 +1,8 @@
-import { IgApiClient, IgLoginBadPasswordError } from 'instagram-private-api';
+import {
+  IgApiClient,
+  IgLoginBadPasswordError,
+  IgLoginTwoFactorRequiredError,
+} from 'instagram-private-api';
 
 const ig = new IgApiClient();
 
@@ -20,7 +24,13 @@ export async function loginHandler(req, res) {
     if (error instanceof IgLoginBadPasswordError) {
       return res.redirect('/');
     }
+
+    if (error instanceof IgLoginTwoFactorRequiredError) {
+      return res.redirect('/ig/two-factor');
+    }
+
     console.log('ERROR: ', error);
+    return res.redirect('/');
   }
 }
 
@@ -35,7 +45,7 @@ export async function unfollowHandler(_req, res) {
       await ig.friendship.destroy(followee.pk);
     }
 
-    return res.redirect('/unfollow');
+    return res.redirect('/ig/unfollow');
   } catch (error) {
     console.log('ERROR: ', error);
   }
