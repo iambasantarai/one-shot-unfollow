@@ -18,9 +18,7 @@ export async function loginHandler(req, res) {
     });
   } catch (error) {
     if (error instanceof IgLoginBadPasswordError) {
-      return res.redirect('/', {
-        message: error.response.body.message,
-      });
+      return res.redirect('/');
     }
     console.log('ERROR: ', error);
   }
@@ -33,6 +31,7 @@ export async function unfollowHandler(_req, res) {
       .items();
 
     for (const followee of following) {
+      console.log('INFO: Unfollowing ', followee.username);
       await ig.friendship.destroy(followee.pk);
     }
 
