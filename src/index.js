@@ -1,6 +1,7 @@
 import url from 'node:url';
 import path from 'node:path';
-import express, { json } from 'express';
+import express from 'express';
+import session from 'express-session';
 
 import routes from './routes/index.js';
 
@@ -15,6 +16,14 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.set('views', [path.join(__dirname, 'views')]);
 app.set('view engine', 'ejs');
+app.use(
+  session({
+    secret: '059976e2ef27b4e4',
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 1 * 60 * 1000 },
+  }),
+);
 app.use(routes);
 
 app.listen(PORT, () => {

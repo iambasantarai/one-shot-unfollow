@@ -26,11 +26,41 @@ export async function loginHandler(req, res) {
     }
 
     if (error instanceof IgLoginTwoFactorRequiredError) {
+      req.session.twoFactorInfo = error.response.body.two_factor_info;
+
       return res.redirect('/ig/two-factor');
     }
 
     console.log('ERROR: ', error);
     return res.redirect('/');
+  }
+}
+
+export async function twoFactorVerificationHandler(req, res) {
+  try {
+    const { otp } = req.body;
+    console.log('OTP: ', otp);
+
+    const { username, totp_two_factor_on, two_factor_identifier } =
+      req.session.twoFactorInfo;
+
+    const verificationMethod = totp_two_factor_on ? '0' : '1';
+
+    const loggedInUser = await ig.account.twoFactorLogin({
+      username,
+      verificationCode: otp,
+      twoFactorIdentifier: two_factor_identifier,
+      verificationMethod,
+    });
+
+    const following = await ig.feed.accountFollowing().items();
+
+    return res.render('unfollow', {
+      username: loggedInUser.username,
+      followingCount: Object.entries(following).length,
+    });
+  } catch (error) {
+    console.log('ERROR: ', error);
   }
 }
 

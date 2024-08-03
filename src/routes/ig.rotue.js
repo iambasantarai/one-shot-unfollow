@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   loginHandler,
   logoutHandler,
+  twoFactorVerificationHandler,
   unfollowHandler,
 } from '../controllers/ig.controller.js';
 
@@ -14,6 +15,7 @@ router.get('/logout', logoutHandler);
 router.get('/two-factor', (_req, res) => {
   res.render('twoFactor');
 });
+router.post('/two-factor', twoFactorVerificationHandler);
 
 router.get('/unfollow', (_req, res) => {
   res.render('unfollow');
