@@ -22,16 +22,20 @@ export async function loginHandler(req, res) {
     });
   } catch (error) {
     if (error instanceof IgLoginBadPasswordError) {
+      req.flash('info', error.response.body.message);
       return res.redirect('/');
     }
 
     if (error instanceof IgLoginTwoFactorRequiredError) {
       req.session.twoFactorInfo = error.response.body.two_factor_info;
 
+      req.flash('info', error.response.body.message);
       return res.redirect('/ig/two-factor');
     }
 
     console.log('ERROR: ', error);
+
+    req.flash('info', error.response.body.message);
     return res.redirect('/');
   }
 }
@@ -39,7 +43,6 @@ export async function loginHandler(req, res) {
 export async function twoFactorVerificationHandler(req, res) {
   try {
     const { otp } = req.body;
-    console.log('OTP: ', otp);
 
     const { username, totp_two_factor_on, two_factor_identifier } =
       req.session.twoFactorInfo;
@@ -61,10 +64,13 @@ export async function twoFactorVerificationHandler(req, res) {
     });
   } catch (error) {
     console.log('ERROR: ', error);
+
+    req.flash('info', error.response.body.message);
+    return res.redirect('/ig/two-factor');
   }
 }
 
-export async function unfollowHandler(_req, res) {
+export async function unfollowHandler(req, res) {
   try {
     const following = await ig.feed
       .accountFollowing(ig.state.cookieUserId)
@@ -78,15 +84,22 @@ export async function unfollowHandler(_req, res) {
     return res.redirect('/ig/unfollow');
   } catch (error) {
     console.log('ERROR: ', error);
+
+    req.flash('info', error.response.body.message);
+    return res.redirect('/ig/unfollow');
   }
 }
 
-export async function logoutHandler(_req, res) {
+export async function logoutHandler(req, res) {
   try {
     await ig.account.logout();
 
+    req.flash('info', 'Bye!');
     return res.redirect('/');
   } catch (error) {
     console.log('ERROR: ', error);
+
+    req.flash('info', error.response.body.message);
+    return res.redirect('/ig/unfollow');
   }
 }

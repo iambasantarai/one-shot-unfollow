@@ -12,13 +12,13 @@ const router = Router();
 router.post('/login', loginHandler);
 router.get('/logout', logoutHandler);
 
-router.get('/two-factor', (_req, res) => {
-  res.render('twoFactor');
+router.get('/two-factor', (req, res) => {
+  res.render('twoFactor', { message: req.flash('message') });
 });
 router.post('/two-factor', twoFactorVerificationHandler);
 
-router.get('/unfollow', (_req, res) => {
-  res.render('unfollow');
+router.get('/unfollow', (req, res) => {
+  res.render('unfollow', { message: req.flash('message') });
 });
 router.post('/unfollow', unfollowHandler);
 

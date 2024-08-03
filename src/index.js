@@ -2,6 +2,7 @@ import url from 'node:url';
 import path from 'node:path';
 import express from 'express';
 import session from 'express-session';
+import flash from 'connect-flash';
 
 import routes from './routes/index.js';
 
@@ -24,6 +25,7 @@ app.use(
     cookie: { maxAge: 1 * 60 * 1000 },
   }),
 );
+app.use(flash());
 app.use(routes);
 
 app.listen(PORT, () => {

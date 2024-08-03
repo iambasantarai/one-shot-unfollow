@@ -4,7 +4,7 @@ import igRoutes from './ig.rotue.js';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { info: req.flash('info') });
 });
 
 router.get('/heartbeat', (req, res) => {
