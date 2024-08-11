@@ -4,6 +4,8 @@ import {
   IgLoginTwoFactorRequiredError,
 } from 'instagram-private-api';
 
+import { getRandomNumber } from '../utils/randomNumber.util.js';
+
 const ig = new IgApiClient();
 
 export async function loginHandler(req, res) {
@@ -76,12 +78,20 @@ export async function unfollowHandler(req, res) {
       .accountFollowing(ig.state.cookieUserId)
       .items();
 
+    const randomTimes = [15, 17, 19];
+    const randomIndex = getRandomNumber(0, randomTimes.length - 1);
+
     for (const followee of following) {
-      console.log('INFO: Unfollowing ', followee.username);
-      await ig.friendship.destroy(followee.pk);
+      const randomDelay = randomTimes[randomIndex] * 1000;
+
+      setTimeout(async () => {
+        console.log('INFO: Unfollowing ', followee.username);
+        await ig.friendship.destroy(followee.pk);
+      }, randomDelay);
     }
 
-    return res.redirect('/ig/unfollow');
+    req.flash('info', 'Unfollowed all!');
+    return res.redirect('/');
   } catch (error) {
     console.log('ERROR: ', error);
 
